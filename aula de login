@@ -1,26 +1,61 @@
-let bancodeDados= [];
+let bancodeDados = [];
 
 function cad(){
-    let usuario = document.getElementById('username').value; 
-    let pos = bancodeDados.indexOf(usuario.toUpperCase());
-    if(pos == -1){
-        bancodeDados.push(usuario.toUpperCase());
-        alert("usuário cadastrado com sucesso!")
-        document.getElementById('username').value = null;
-    }else{
-        alert("esse usuário ja foi cadastrado!")
-    }
-    
+   let usuario = {
+    username:document.getElementById('cad').value.toUpperCase(),
+    password:document.getElementById('senha').value.toUpperCase()
+   }
+   if(existe(usuario.username) == false){
+    bancodeDados.push(usuario);
+    alert('Usuario cadastrado com sucesso!')
+    document.getElementById('cad').value = null;
+    document.getElementById('senha').value = null;
+   }else{
+    alert('este usuario ja foi cadastrado!');
+   }
 }
 
 function login(){
-    let usuario = document.getElementById('user').value;
-    let pos = bancodeDados.indexOf(usuario);
+    let username = document.getElementById('user').value;
+    if(existe(username) == false){
+        alert('Usuario não encontrado.')
+    }else{
+        alert('Bem vindo ao sistema.')
+    }
+    document.getElementById('user').value = null;
+}
+
+function edit(){
+    let username = document.getElementById('edit').value;
+    let pos = bancodeDados.indexOf(username.toUpperCase());
     if(pos == -1){
-        alert("usuario não encontrado")
+        alert('Usuario não encontrado.')
+    }else{
+        let newUser = prompt('insira o novo nome de usuario.')
+        bancodeDados[pos] = newUser.toUpperCase()
+    }
+    document.getElementById('edit').value = null;
+}
+
+function eliminar(){
+    let username = document.getElementById('eliminar').value
+    let pos = bancodeDados.indexOf(username.toUpperCase())
+    if(pos == -1){
+        alert('Usuario não encontrado.')
+    }else{
+        bancodeDados.splice(pos, 1);
+        alert('Cadastro deletado com sucesso.')
+    }
+    document.getElementById('eliminar').value = null;
+}
+
+function existe(username){
+    let pos = bancodeDados.indexOf(username)
+    if(pos == -1){
+        return false
     }
     else{
-        alert("bem vindo ao sistema")
+        return true;
     }
 }
 
@@ -30,28 +65,44 @@ function login(){
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>Document</title>
 </head>
 <body>
-   <div class="container">
-    <h1> sistema de login </h1>
-        <div class="register">
-           <h3>cadastro de usuário</h3>
-           <label for="username">digite o nome do usuário:</label>
-           <input type="text" id="username" placeholder="EX: Tiago"><br>
-            <button onclick="cad()" id="adiciona">Cadastrar</button>
+    <div class="container">
+        <div class="title">
+            <h2>Sistema de login</h2>
+        </div>
+        <div class="cad">
+            <h3>Cadastro de Usuario</h3>
+            <label for="usrname">Nome de Usuario:</label><br>
+            <input type="text" id="cad" placeholder="EX:Romero"><br>
+            <label for="senha">Digite uma senha</label><br>
+            <input type="password" id="senha">
+            <button onclick="cad()">Cadastrar</button>
         </div>
         <div class="login">
-            <h3>logar</h3>
-            <label for="user">digite o nome do usuário:</label>
-            <input type="text" id="user" placeholder="EX: Tiago"><br>
-             <button onclick="login()" id="logar">entrar</button>
+           <h3>Login</h3>
+           <label for="user">Nome de Usuario:</label><br>
+           <input type="text" id="user" placeholder="EX:Romero">
+           <button onclick="login()">Logar</button>
+        </div>
+        <div class="edit">
+            <h3>Editar</h3>
+            <label for="edit">Nome do Usuario</label><br>
+            <input type="text" id="edit" placeholder="EX:Romero">
+            <button onclick="edit()">Editar</button>
+        </div>
+        <div class="Excluir">
+            <h3>Excluir</h3>
+            <label for="eliminar">Nome do Usuario</label><br>
+            <input type="text" id="eliminar" placeholder="EX:Romero">
+            <button onclick="eliminar()">Excluir</button>
+
         </div>
     </div>
     <script src="script.js"></script>
 </body>
 </html>
-
 body{
     display: flex;
     justify-content: center;
